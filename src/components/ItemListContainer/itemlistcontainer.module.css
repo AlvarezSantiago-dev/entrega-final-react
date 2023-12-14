@@ -1,0 +1,14 @@
+.itemlistcont {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    margin-top: 10px;
+}
+
+
+img {
+    width: 260px;
+    height: 260px;
+}

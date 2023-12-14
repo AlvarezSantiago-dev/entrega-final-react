@@ -1,0 +1,13 @@
+.cart {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
+.cart img {
+    width: 24px;
+    height: 24px;
+}
+span {
+    color: #CE5A67;
+}
