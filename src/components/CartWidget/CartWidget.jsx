@@ -20,8 +20,8 @@ export const CartWidget = () => {
       <aside className={styles.cart}>
 
         {cartItems.map((item) => (
-          <div key={item.id} >
-            <div >
+          <div key={item.id} className={styles.product}>
+            <div className={styles.tittle}>
               {item.name}
               </div>
             <img src={item.image} alt="" />

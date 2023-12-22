@@ -9,7 +9,7 @@ export const CartContextProvider = ({ children }) => {
     const [cartItems, setCartItems] = useState([]);
     const [totalCartItems, setTotalCartItems] = useState(0);
     const [totalQuantity, setTotalQuantity] = useState(0);
-    const [orderId, setorderId] = useState("");
+
     const addItem = (item, quantity) => {
 
         const { id, image, name, price } = item;
@@ -63,37 +63,26 @@ export const CartContextProvider = ({ children }) => {
     }
 
 
-    const addOrderDB = async (cartItems, userData, total) => {
-        const newOrder = {
-            buyer: userData,
-            items: cartItems,
-            data: serverTimestamp(),
-            total,
-        } 
-        const orderRef = await addDoc(collection(db, "orders"), newOrder);
-        return setorderId(orderRef.id);
-    }
-
-
-       
-
-        useEffect(() => {
-            handleTotalQuantity();
-            handleTotal();
-        }, [cartItems]);
 
 
 
-        const objetValue = {
-            cartItems,
-            totalCartItems,
-            totalQuantity,
-            addItem,
-            removeItem,
-            clearCartItems,
-            addOrderDB,
-            orderId
-        };
 
-        return <CartContext.Provider value={objetValue}> {children} </CartContext.Provider>;
-    }
+    useEffect(() => {
+        handleTotalQuantity();
+        handleTotal();
+    }, [cartItems]);
+
+
+
+    const objetValue = {
+        cartItems,
+        totalCartItems,
+        totalQuantity,
+        addItem,
+        removeItem,
+        clearCartItems,
+        
+    };
+
+    return <CartContext.Provider value={objetValue}> {children} </CartContext.Provider>;
+}
