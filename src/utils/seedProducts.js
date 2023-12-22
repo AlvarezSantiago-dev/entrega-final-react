@@ -33,7 +33,7 @@ const productos = [
         stock: 7,
         category: "zapatillas",
         name: "Nike Air Force 1 Low Retro",
-        price: "$109.999",
+        price: 109.999,
         image: "https://nikearprod.vtexassets.com/arquivos/ids/702675-800-800?v=638233930112700000&width=800&height=800&aspect=true",
         description: "Soy una description"
 

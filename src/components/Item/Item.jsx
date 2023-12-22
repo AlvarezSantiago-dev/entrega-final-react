@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { CartContext } from "../../context/CartContext";
 import { Button } from "../Button/Button"
 import { Contador } from "../Contador/Contador"
@@ -14,8 +15,9 @@ export const Item = ({ id, name, price, stock, image }) => {
     };
 
     return (
-        
+        <>
         <div className={styles.item}>
+            
                 <h3>{name}</h3>
                 <img src={image} alt={name} />
                 <p>${price}</p>
@@ -23,11 +25,15 @@ export const Item = ({ id, name, price, stock, image }) => {
 
                     <Contador max={stock} countCambio={handleCountChange} />
                 </div>
+                <Link to={`/item/${id}`}>
+                <Button text={"detalles"} />
+            </Link>
                     <Button 
                         text="Agregar al carrito"
-                        functionClick={() => addItem({ id, name, price }, itemCount)} />
+                        functionClick={() => addItem({ id, image, name, price }, itemCount)} />
                 
             
         </div>
+        </>
     )
 };

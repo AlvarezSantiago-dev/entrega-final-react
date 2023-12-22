@@ -1,22 +1,39 @@
+import { Link } from "react-router-dom";
 import { Contador } from "../Contador/Contador";
 import styles from "./itemdetail.module.css"
-export const ItemDetail = ({ name, description, image, stock, price }) => {
-    
+import { Button } from "../Button/Button";
+import { useContext, useState } from "react";
+import { CartContext } from "../../context/CartContext";
+export const ItemDetail = ({ id, name, price, stock, image }) => {
+    const { addItem } = useContext(CartContext);
+    const [itemCount, setItemCount] = useState(1);
 
-    return(
-        <>
-        <h1>HOLA SOY ITEMDETAIL</h1>
+    const handleCountChange = (count) => {
+        setItemCount(count);
+    };
+
+    return (
+
+
         <div className={styles.itemdetail}>
-            <h4>{name}</h4>
-            <img src={image} alt="" />
+            <Link to={`/`}>
+                <Button text={"Regresar"} />
+            </Link>
+            <h3>{name}</h3>
+            <img src={image} alt={name} />
+            <p>${price}</p>
             <div>
-                <div>
-                    <p> {price} </p>
-                    <Contador max={stock}/>
-                </div>
-                <div><p>{description}</p></div>
+
+                <Contador max={stock} countCambio={handleCountChange} />
             </div>
+
+            <Button
+                text="Agregar al carrito"
+                functionClick={() => addItem({ id, image, name, price }, itemCount)} />
+
+
         </div>
-        </>
+
     )
+
 };

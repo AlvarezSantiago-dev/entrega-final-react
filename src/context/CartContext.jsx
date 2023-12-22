@@ -1,4 +1,6 @@
+import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { createContext, useEffect, useState } from "react";
+import { db } from "../config/firebaseConfig";
 
 
 export const CartContext = createContext(null);
@@ -7,10 +9,10 @@ export const CartContextProvider = ({ children }) => {
     const [cartItems, setCartItems] = useState([]);
     const [totalCartItems, setTotalCartItems] = useState(0);
     const [totalQuantity, setTotalQuantity] = useState(0);
-
+    const [orderId, setorderId] = useState("");
     const addItem = (item, quantity) => {
-        
-        const { id, name, price } = item;
+
+        const { id, image, name, price } = item;
         // Buscamos la posición indice del producto dentro del carrito
         const index = cartItems.findIndex((product) => product.id === id);
         if (index !== -1) {
@@ -27,6 +29,7 @@ export const CartContextProvider = ({ children }) => {
         } else {
             const newItem = {
                 id,
+                image,
                 name,
                 price,
                 quantity,
@@ -59,21 +62,38 @@ export const CartContextProvider = ({ children }) => {
         setTotalQuantity(total);
     }
 
-    useEffect(() => {
-        handleTotalQuantity();
-        handleTotal();
-    }, [cartItems]);
+
+    const addOrderDB = async (cartItems, userData, total) => {
+        const newOrder = {
+            buyer: userData,
+            items: cartItems,
+            data: serverTimestamp(),
+            total,
+        } 
+        const orderRef = await addDoc(collection(db, "orders"), newOrder);
+        return setorderId(orderRef.id);
+    }
+
+
+       
+
+        useEffect(() => {
+            handleTotalQuantity();
+            handleTotal();
+        }, [cartItems]);
 
 
 
-    const objetValue = {
-        cartItems,
-        totalCartItems,
-        totalQuantity,
-        addItem,
-        removeItem,
-        clearCartItems
-    };
+        const objetValue = {
+            cartItems,
+            totalCartItems,
+            totalQuantity,
+            addItem,
+            removeItem,
+            clearCartItems,
+            addOrderDB,
+            orderId
+        };
 
-    return <CartContext.Provider value={objetValue}> {children} </CartContext.Provider>;
-};
+        return <CartContext.Provider value={objetValue}> {children} </CartContext.Provider>;
+    }

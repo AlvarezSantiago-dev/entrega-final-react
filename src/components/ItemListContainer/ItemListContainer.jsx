@@ -1,14 +1,12 @@
 
 import { useEffect, useState } from "react";
 
-import { useParams } from "react-router-dom";
-
-import { Loading } from "../Loading/Loading";
-import { seedProducts } from "../../utils/seedProducts";
 import { collection, getDocs, query, where } from "firebase/firestore";
+import { useParams } from "react-router-dom";
 import { db } from "../../config/firebaseConfig";
 import { Item } from "../Item/Item";
-import styles from "./itemlistcontainer.module.css"
+import { Loading } from "../Loading/Loading";
+import styles from "./itemlistcontainer.module.css";
 export const ItemListContainer = () => {
 
     const { category } = useParams();
@@ -43,17 +41,17 @@ export const ItemListContainer = () => {
     }, [category]);
 
     return (
-            <div className={styles.itemlistcont}>
-                {isLoading ? (
-                    <Loading />
-                ) : (
-                    productos.map((productos) => (
-                        <div key={productos.id} className={styles.itemlistcont}>
-                            <Item {...productos} />
-                        </div>
-                    ))
-                )}
-            </div>
+        <div className={styles.itemlistcont}>
+            {isLoading ? (
+                <Loading />
+            ) : (
+                productos.map((productos) => (
+                    <div key={productos.id} >
+                        <Item {...productos} />
+                    </div>
+                ))
+            )}
+        </div>
     )
 };
 
